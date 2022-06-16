@@ -1,0 +1,87 @@
+<h3 style="text-align:center ;">Add Student's Information</h3>
+<div class="container" id="form">
+    <form [formGroup]="mainForm">
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" formControlName="name" >
+            <span  class="errSpan" *ngIf="name && name.touched && name.invalid && name.errors" >This field is requied</span>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="mail" formControlName="mail" >
+            <span class="errSpan" *ngIf="mail && mail.touched && mail.invalid" >This field is requied</span>
+            <span class="errSpan" *ngIf="" ></span>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="number" class="form-control" id="phone" name="phone" formControlName="phone" >
+            <span class="errSpan" *ngIf="phone && phone.touched && phone.invalid" >This field is requied</span>
+        </div>
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <input type="text" class="form-control" id="gender" name="gender" formControlName="gender" >
+            <span class="errSpan" *ngIf="gender && gender.touched && gender.invalid" >This field is requied</span>
+        </div>
+        <div class="mb-3">
+            <label for="college" class="form-label">College Name</label>
+            <input type="text" class="form-control" id="college" name="college" formControlName="college" >
+            <span class="errSpan" *ngIf="college && college.touched && college.invalid" >This field is requied</span>
+        </div>
+        <div class="mb-3">
+            <label for="branch" class="form-label">Branch</label>
+            <input type="text" class="form-control" id="branch" name="branch" formControlName="branch" >
+            <span class="errSpan" *ngIf="branch && branch.touched && branch.invalid" >This field is requied</span>
+        </div>
+        <div class="mb-3">
+            <label for="roll" class="form-label">Roll Number</label>
+            <input type="number" class="form-control" id="roll" name="roll" formControlName="roll" >
+            <span class="errSpan" *ngIf="roll && roll.touched && roll.invalid" >This field is requied</span>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="addStudent()" [disabled]="!mainForm.valid" style="margin-right:10px" *ngIf="!isEdit">
+            Submit
+        </button> 
+        <button type="" class="btn btn-primary" *ngIf="isEdit" style="margin-right:10px" [disabled]="!mainForm.valid" (click)="updateStudent()">
+            Update
+        </button>
+        <button type="" class="btn btn-danger" (click)="reset()" >Reset</button>
+        
+    </form>
+</div>
+
+
+<div class="container">
+    <table class="table">
+        <thead style="text-align: center;">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Gender</th>
+                <th scope="col">College Name</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Roll No</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let list of listData | paginate : {itemPerPage : 5, currentPage:p} ; index as i;">
+               <td>{{list.name}}</td>
+               <td>{{list.mail}}</td>
+               <td>{{list.phone}}</td>
+               <td>{{list.gender}}</td>
+               <td>{{list.college}}</td>    
+               <td>{{list.branch}}</td>
+               <td>{{list.roll}}</td>
+                <td>
+                    <div style="margin: 5px; text-align:center">
+                        <button type="button" class="btn btn-danger" style="margin-bottom:2px; padding: auto;"  (click)="removeItem(list)">Remove</button>
+                    </div>
+                    <div style="margin: 5px; text-align:center;">
+                        <button type="button" class="btn btn-primary" style="margin-top:2px;  padding: 0 25px 0 25px; height: 35px" (click) = "editStudent(i)">Edit</button>
+                    </div>
+                </td> 
+            </tr>
+        </tbody>
+        <pagination-controls (pageChange)="p-$event"></pagination-controls>
+    </table>
+</div>
